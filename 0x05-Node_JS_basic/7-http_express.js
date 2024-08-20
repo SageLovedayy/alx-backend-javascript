@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 app.get('/students', async (req, res) => {
   res.status(200).type('text/plain');
   res.write('This is the list of our students\n');
-  
+
   try {
     const data = await students(process.argv[2]);
     res.write(`Number of students: ${data.students.length}\n`);
@@ -29,4 +29,3 @@ app.listen(port, () => {
 });
 
 module.exports = app;
-
