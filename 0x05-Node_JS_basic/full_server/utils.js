@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-async function countStudents(path) {
+async function countStudents (path) {
   let data;
   try {
     data = await fs.promises.readFile(path, 'utf8');
@@ -13,19 +13,19 @@ async function countStudents(path) {
       firstName: student[0],
       lastName: student[1],
       age: student[2],
-      field: student[3],
+      field: student[3]
     }));
-    let fields = students.map(student => student.field);
-    let unique_fields = new Set(fields);
-    let students_by_field = {};
-    for (let field of unique_fields) {
-      students_by_field[field] = [];
-    }
-    for (let student of students) {
-        students_by_field[student.field].push(student.firstName);
-    }
-    console.log(students_by_field);
-    return students_by_field;
+  const fields = students.map(student => student.field);
+  const uniqueFields = new Set(fields);
+  const studentsByField = {};
+  for (const field of uniqueFields) {
+    studentsByField[field] = [];
+  }
+  for (const student of students) {
+    studentsByField[student.field].push(student.firstName);
+  }
+  console.log(studentsByField);
+  return studentsByField;
 }
 
 module.exports = countStudents;
