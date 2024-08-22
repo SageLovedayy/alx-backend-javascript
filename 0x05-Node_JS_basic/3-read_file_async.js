@@ -35,6 +35,17 @@ async function countStudents(path) {
       `Number of students in ${field}: ${studentsInField.length}. List: ${studentsByFirstName}`,
     );
   });
+
+  return {
+    students: studentsArray,
+    fields: fields.map((field) => ({
+      name: field,
+      count: studentsArray.filter((student) => student.field === field).length,
+      students: studentsArray
+        .filter((student) => student.field === field)
+        .map((student) => student.firstName),
+    })),
+  };
 }
 
 module.exports = countStudents;

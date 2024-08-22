@@ -1,6 +1,6 @@
 const http = require('http');
 
-const students = require('./3-read_file_async');
+const fileReader = require('./3-read_file_async');
 
 const hostname = '127.0.0.1';
 const port = 1245;
@@ -12,12 +12,23 @@ const app = http.createServer((req, res) => {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     res.write('This is the list of our students\n');
-    students(process.argv[2]).then((data) => {
-      res.write(`Number of students: ${data.students.length}\n`);
-      res.write(`Number of students in CS: ${data.csStudents.length}. List: ${data.csStudents.join(', ')}\n`);
-      res.write(`Number of students in SWE: ${data.sweStudents.length}. List: ${data.sweStudents.join(', ')}`);
-      res.end();
-    }).catch((err) => res.end(err.message));
+    fileReader(process.argv[2])
+      .then((data) => {
+        res.write(`Number of students: ${data.students.length}\n`);
+
+        data.fields.forEach((field) => {
+          const studentList = field.students.join(', ');
+          res.write(
+            `Number of students in ${field.name}: ${field.count}. List: ${studentList}\n`,
+          );
+        });
+
+        res.end();
+      })
+      .catch((error) => {
+        res.statusCode = 500;
+        res.end(error.message);
+      });
   }
 });
 
