@@ -15,8 +15,12 @@ app.get('/students', async (req, res) => {
   try {
     const data = await students(process.argv[2]);
     res.write(`Number of students: ${data.students.length}\n`);
-    res.write(`Number of students in CS: ${data.csStudents.length}. List: ${data.csStudents.join(', ')}\n`);
-    res.write(`Number of students in SWE: ${data.sweStudents.length}. List: ${data.sweStudents.join(', ')}`);
+    data.fields.forEach((field) => {
+      const studentList = field.students.join(', ');
+      res.write(
+        `Number of students in ${field.name}: ${field.count}. List: ${studentList}\n`,
+      );
+    });
   } catch (err) {
     res.write(err.message);
   } finally {
