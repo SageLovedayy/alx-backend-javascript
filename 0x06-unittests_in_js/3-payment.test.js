@@ -19,11 +19,7 @@ describe('sendPaymentRequestToApi function', () => {
   it('validate the usage of the Utils function', () => {
     sendPaymentRequestToApi(100, 20);
 
-    console.log('Spy call details:', utilSpy.getCalls());
-
     expect(utilSpy.calledOnce).to.be.true;
-
-    console.log('Arguments used for the spy call:', utilSpy.getCall(0).args);
 
     expect(utilSpy.calledWith('SUM', 100, 20)).to.be.true;
   });
