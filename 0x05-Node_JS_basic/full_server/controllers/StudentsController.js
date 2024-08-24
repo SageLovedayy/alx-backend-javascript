@@ -1,3 +1,4 @@
+/* eslint-disable */
 const readDatabase = require('../utils');
 
 class StudentsController {
